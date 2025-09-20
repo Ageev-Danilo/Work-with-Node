@@ -1,3 +1,15 @@
+
+
+const express = require('express')
+const app = express()
+const HOST = 'localhost'
+const PORT = 8000
+app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
+app.get('/timestamp', (req, res) => {
+    console.log('New GET request')
+    res.json(getDate())
+})
+
 const moment = require('moment')
 function getCurrentDay(){console.log(moment().format('dddd'))} 
 function getCurrentMonth(){console.log(moment().format('MMMM'))}

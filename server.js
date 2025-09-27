@@ -4,10 +4,26 @@ const express = require('express')
 const app = express()
 const HOST = 'localhost'
 const PORT = 8000
-app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
+
 const postsPath = path.join(__dirname, "posts.json")
 const posts = JSON.parse(fs.readFileSync(postsPath, 'utf-8'))
 
+app.get('/posts/:id', (req, res) => {
+    const id = +req.params.id
+    if (isNaN(id)){
+        res.status(400).json("Id is not Number")
+        return
+    }
+
+    const searchedPost = posts.find((somePost) => { 
+        return somePost.id === id
+    })
+    if (!searchedPost) {
+        res.status(404).json("There is no post")
+        return
+    }
+    res.status(200).json(searchedPost)
+})
 
 app.get('/timestamp', (req, res) => {
     console.log('New GET request')
@@ -17,7 +33,7 @@ app.get('/posts',(req, res) => {
     console.log(posts)
     res.json(posts)
 })
-
+app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
 const moment = require('moment')
 function getCurrentDay(){console.log(moment().format('dddd'))} 
 function getCurrentMonth(){console.log(moment().format('MMMM'))}

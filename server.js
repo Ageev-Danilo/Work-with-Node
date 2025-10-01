@@ -29,10 +29,33 @@ app.get('/timestamp', (req, res) => {
     console.log('New GET request')
     res.json(getDate())
 })
-app.get('/posts',(req, res) => {
-    console.log(posts)
-    res.json(posts)
+app.get('/posts', (req, res) => {
+    const take = req.query.take
+    const skip = req.query.skip
+    if(!take && !skip){
+        res.status(200).json(posts)
+        return
+    }
+    if(isNaN(+take)){
+        if(typeof(+take) != undefined){
+            res.status(400).json(typeof(take))
+            return
+        }
+        return
+    }
+    if(isNaN(+skip)){
+        if(typeof(+skip) != undefined){
+            res.status(400).json("Skip is not a Number")
+            return
+        }
+        return
+    }
+    const slicedPosts = posts.slice(+skip, +take)
+    res.status(200).json(slicedPosts)
+    console.log(slicedPosts)
 })
+
+
 app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
 const moment = require('moment')
 function getCurrentDay(){console.log(moment().format('dddd'))} 

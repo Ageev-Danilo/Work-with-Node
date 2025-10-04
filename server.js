@@ -1,9 +1,11 @@
 const fs = require('fs')
+const fsPromises = require('fs/promises')
 const path = require('path')
 const express = require('express')
 const app = express()
 const HOST = 'localhost'
 const PORT = 8000
+app.use(express.json)
 
 const postsPath = path.join(__dirname, "posts.json")
 const posts = JSON.parse(fs.readFileSync(postsPath, 'utf-8'))
@@ -55,14 +57,43 @@ app.get('/posts', (req, res) => {
     console.log(slicedPosts)
 })
 
+app.post('/posts',async  (req, res) => {
+    const body = req.body
+    if(!body){
+        res.status(422).json('There is no body!')
+        return
+    }
+    const newPost = {...body, id: posts.length + 1}
+    if(!newPost.name){
+        res.status(422).json('There is no name!')
+        return
+    }
+    if(!newPost.description){
+        res.status(422).json('There is no description!')
+        return
+    }
+    if(!newPost.image){
+        res.status(422).json('There is no image!')
+        return
+    }
+    try {
+        posts.push(newPost)
+        await fsPromises.writeFile(postsPath, JSON.stringify(newPost))
+        res.status(201).json(newPost)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json('A problem with product creation has occured.')
+    }
+})
 
 app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
 const moment = require('moment')
+const { promises } = require('dns')
 function getCurrentDay(){console.log(moment().format('dddd'))} 
 function getCurrentMonth(){console.log(moment().format('MMMM'))}
 function getCurrentYear(){console.log(moment().format('YYYY'))} 
-function getDate(){console.log(moment().format('YYYY/DD/MM HH:mm:ss'))}
-getDate()
+//function getDate(){console.log(moment().format('YYYY/DD/MM HH:mm:ss'))}
+//getDate()
 
-function getCurrentWeekday(){console.log(moment().format('dddd'))}
-getCurrentWeekday() 
+//function getCurrentWeekday(){console.log(moment().format('dddd'))}
+//getCurrentWeekday() 

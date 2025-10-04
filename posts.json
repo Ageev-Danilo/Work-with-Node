@@ -4,34 +4,32 @@
         "name": "post1",
         "description": "first post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
-        "likes": "20"
+        "likes": 808
     },
     {
         "id": 2,
         "name": "post2",
         "description": "second post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
-        "likes": "148"
+        "likes": 148
     },
     {
         "id": 3,
         "name": "post3",
         "description": "third post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
-        "likes": "67"
+        "likes": 666
     },
     {
-        "id": 4,
         "name": "post4",
         "description": "chetwertui post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
-        "likes": "808"
+        "id": 4
     },
     {
-        "id": 5,
         "name": "post5",
         "description": "pyatui post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
-        "likes": "777"
+        "id": 5
     }
 ]

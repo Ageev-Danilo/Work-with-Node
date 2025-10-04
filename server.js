@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 const HOST = 'localhost'
 const PORT = 8000
-app.use(express.json)
+app.use(express.json())
 
 const postsPath = path.join(__dirname, "posts.json")
 const posts = JSON.parse(fs.readFileSync(postsPath, 'utf-8'))
@@ -78,7 +78,7 @@ app.post('/posts',async  (req, res) => {
     }
     try {
         posts.push(newPost)
-        await fsPromises.writeFile(postsPath, JSON.stringify(newPost))
+        await fsPromises.writeFile(postsPath, JSON.stringify(posts, null, 4))
         res.status(201).json(newPost)
     } catch (error) {
         console.log(error)
@@ -88,7 +88,6 @@ app.post('/posts',async  (req, res) => {
 
 app.listen(PORT, HOST, () => {console.log('Success! Server is running http://localhost:8000')})
 const moment = require('moment')
-const { promises } = require('dns')
 function getCurrentDay(){console.log(moment().format('dddd'))} 
 function getCurrentMonth(){console.log(moment().format('MMMM'))}
 function getCurrentYear(){console.log(moment().format('YYYY'))} 

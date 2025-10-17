@@ -1,6 +1,6 @@
-const express = require('express');
-const PostRouter = require('./Post/post.router')
 
+import { PostRouter } from "./Post/post.router"
+import express from "express"
 const app = express()
 const HOST = 'localhost'
 const PORT = 8000

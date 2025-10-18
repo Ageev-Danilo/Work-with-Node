@@ -27,8 +27,8 @@
         "id": 4
     },
     {
-        "name": "post5",
-        "description": "pyatui post",
+        "name": "post10",
+        "description": "9atui post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
         "id": 5
     },
@@ -61,5 +61,11 @@
         "description": "8moi post",
         "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
         "id": 10
+    },
+    {
+        "name": "post9",
+        "description": "9atui post",
+        "image": "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
+        "id": 11
     }
 ]

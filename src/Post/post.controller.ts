@@ -1,9 +1,10 @@
 import{Request, Response} from "express"
 import { PostService } from "./post.service";
+import { Post, PostControllerContract } from "./post.types"
 
 
-export const PostController = {
-    getPostById:  (req: Request, res: Response) => {
+export const PostController: PostControllerContract = {
+    getPostById:  (req, res) => {
         if (!req.params.id){
             res.status(400).json("Id is required")
             return;
@@ -21,7 +22,7 @@ export const PostController = {
         res.status(200).json(searchedPost)
     },
 
-    getAllPosts: (req: Request, res: Response) => {
+    getAllPosts: (req, res) => {
         console.log(req.query)
         const take = req.query.take
         const skip = req.query.skip
@@ -47,7 +48,7 @@ export const PostController = {
         res.status(200).json(slicedPosts)
     },
     
-    createPost: async  (req: Request, res: Response) => {
+    createPost: async  (req, res) => {
         const body = req.body
         if(!body){
             res.status(422).json('There is no body!')
@@ -75,7 +76,7 @@ export const PostController = {
             }
              res.status(201).json('The post is successfully created!')
     },
-    updatePost: async (req: Request, res: Response) => {
+    updatePost: async (req, res) => {
         if(!req.params.id){
             res.status(400).json("There is no id!")
             return
@@ -91,6 +92,11 @@ export const PostController = {
             return
         }
         const updatedPost = await PostService.updatePost(body, id)
+        if(!updatedPost){
+                res.status(500).json("Post update has been failed!") 
+                return   
+            }
+            res.status(201).json('The post is successfully updated!')
     }
 
 }

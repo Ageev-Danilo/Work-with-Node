@@ -1,7 +1,7 @@
 import path from "path"
 import fs from "fs"
 import fsPromises from "fs/promises"
-import { Post, PostContract } from "./post.types"
+import { Post, PostServiceContract } from "./post.types"
 
 
 import express from "express"
@@ -14,7 +14,7 @@ app.use(express.json())
 const postsPath = path.join(__dirname, "posts.json")
 const posts = JSON.parse(fs.readFileSync(postsPath, 'utf-8'))
 
-export const PostService: PostContract = {
+export const PostService: PostServiceContract = {
     getPostById:  (id: number) => {
         const searchedPost = posts.find((somePost: {id: number,name: string, description: string, image: string, likes: number }) => { 
             return somePost.id === id

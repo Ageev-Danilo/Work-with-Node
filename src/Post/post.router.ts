@@ -9,3 +9,5 @@ PostRouter.get('/posts/:id', PostController.getPostById)
 PostRouter.get('/posts', PostController.getAllPosts)
 PostRouter.post('/posts', PostController.createPost)
 PostRouter.patch('/posts/:id', PostController.updatePost)
+PostRouter.delete('/post/:id')
+

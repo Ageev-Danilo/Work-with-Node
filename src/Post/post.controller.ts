@@ -97,6 +97,23 @@ export const PostController: PostControllerContract = {
                 return   
             }
             res.status(201).json('The post is successfully updated!')
+    },
+    deletePost: async (req, res) => {
+        if(!req.params.id){
+            res.status(400).json("There is no id!")
+            return
+        }
+        const id = +req.params.id
+        if(isNaN(id)){
+            res.status(400).json("Id must be a number!")
+            return
+        }
+        const deletedPost = await PostService.deletePost(id)
+        if(!deletedPost){
+                res.status(500).json("Post deleting has been failed!") 
+                return   
+            }
+            res.status(201).json('The post is successfully deleted!')
     }
 
 }

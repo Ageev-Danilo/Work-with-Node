@@ -1,0 +1,45 @@
+import { skip } from "node:test";
+import { PrismaClient } from "../client/prisma-client";
+import { Prisma } from "../generated/prisma/client";
+import { PostRepositoryContract } from "./post.types";
+
+export const PostRepository: PostRepositoryContract = {
+    getPostById(id){
+        return PrismaClient.post.findUnique({
+            where: {id}
+        })
+    },
+    getAllPosts: async(take, skip) => {
+        try {
+            const posts = await PrismaClient.post.findMany({
+                take: take,
+                skip: skip
+            })
+            return posts
+        } catch (error) {
+            console.log(error)
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                    console.log('Failed to create relation between Product and Category')
+                    throw new Error("Failed to create relation between Product and Category") 
+                }
+    throw error
+        }
+    },
+    createPost: async (body) => {
+        return PrismaClient.post.create({
+            data: body
+        })
+    },
+    updatePost: async (body, id) => {
+        return PrismaClient.post.update({
+            where:{id},
+            data: body
+        })
+    },
+    deletePost: async (id) => {
+        return PrismaClient.post.delete({
+            where:{id}
+        })
+    }
+ 
+}

@@ -17,7 +17,7 @@ datasource db {
 model Post{
   id Int @id @default(autoincrement())
   name String
-  descrption String
+  description String
   image String
   likes Int
   tags TagsInPosts[]

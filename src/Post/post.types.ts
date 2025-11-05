@@ -11,8 +11,8 @@ export type UpdatePostChecked = Prisma.PostUpdateInput
 
 
 export interface PostServiceContract{
-    getPostById: (id: number) => Post | null
-    getAllPosts: (take?: number, skip?: number) => Post[]
+    getPostById: (id: number) =>Promise< Post | null>
+    getAllPosts: (take?: number, skip?: number) => Promise<Post[]>
     createPost:(body: CreatePost) => Promise< Post | null>
     updatePost:(body: UpdatePost, id: number) => Promise<Post | null>
     deletePost: (id: number) => Promise<Post | null>

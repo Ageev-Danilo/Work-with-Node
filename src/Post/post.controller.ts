@@ -4,8 +4,10 @@ import { Post, PostControllerContract } from "./post.types"
 
 
 export const PostController: PostControllerContract = {
-    getPostById:  (req, res) => {
-        if (!req.params.id){
+
+    getPostById: async (req, res) => {
+        try {
+            if (!req.params.id){
             res.status(400).json("Id is required")
             return;
         }
@@ -20,14 +22,20 @@ export const PostController: PostControllerContract = {
             return
         }
         res.status(200).json(searchedPost)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Server error')
+        }
+        
     },
 
-    getAllPosts: (req, res) => {
-        console.log(req.query)
+    getAllPosts: async (req, res) => {
+        try {
+            console.log(req.query)
         const take = req.query.take
         const skip = req.query.skip
         if(!take && !skip){
-            res.status(200).json(PostService.getAllPosts())
+            res.status(200).json(await PostService.getAllPosts())
             return
         }
         if(take){
@@ -44,12 +52,18 @@ export const PostController: PostControllerContract = {
             }
         }
         
-        const slicedPosts = PostService.getAllPosts(take ?+take: undefined,skip? +skip: undefined)
+        const slicedPosts = await PostService.getAllPosts(take ?+take: undefined,skip? +skip: undefined)
         res.status(200).json(slicedPosts)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Server error')
+        }
+        
     },
     
     createPost: async  (req, res) => {
-        const body = req.body
+        try {
+            const body = req.body
         if(!body){
             res.status(422).json('There is no body!')
             return
@@ -69,15 +83,21 @@ export const PostController: PostControllerContract = {
         }
         
             
-            const newPost1 = await  PostService.createPost(body)
+            const newPost1 = await PostService.createPost(body)
             if(!newPost1){
                 res.status(500).json("Post creation has been failed!") 
                 return   
             }
              res.status(201).json('The post is successfully created!')
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Server error')
+        }
+        
     },
     updatePost: async (req, res) => {
-        if(!req.params.id){
+        try {
+            if(!req.params.id){
             res.status(400).json("There is no id!")
             return
         }
@@ -97,9 +117,15 @@ export const PostController: PostControllerContract = {
                 return   
             }
             res.status(201).json('The post is successfully updated!')
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Server error')
+        }
+        
     },
     deletePost: async (req, res) => {
-        if(!req.params.id){
+        try {
+            if(!req.params.id){
             res.status(400).json("There is no id!")
             return
         }
@@ -114,6 +140,11 @@ export const PostController: PostControllerContract = {
                 return   
             }
             res.status(201).json('The post is successfully deleted!')
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Server error')
+        }
+        
     }
 
 }

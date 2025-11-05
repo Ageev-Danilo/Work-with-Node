@@ -4,8 +4,8 @@ import { Prisma } from "../generated/prisma/client";
 import { PostRepositoryContract } from "./post.types";
 
 export const PostRepository: PostRepositoryContract = {
-    getPostById(id){
-        return PrismaClient.post.findUnique({
+    async getPostById(id){
+        return await  PrismaClient.post.findUnique({
             where: {id}
         })
     },
@@ -26,18 +26,18 @@ export const PostRepository: PostRepositoryContract = {
         }
     },
     createPost: async (body) => {
-        return PrismaClient.post.create({
+        return await PrismaClient.post.create({
             data: body
         })
     },
     updatePost: async (body, id) => {
-        return PrismaClient.post.update({
+        return await PrismaClient.post.update({
             where:{id},
             data: body
         })
     },
     deletePost: async (id) => {
-        return PrismaClient.post.delete({
+        return await PrismaClient.post.delete({
             where:{id}
         })
     }

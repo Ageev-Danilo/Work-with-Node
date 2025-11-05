@@ -16,7 +16,7 @@ export const PostController: PostControllerContract = {
             res.status(400).json("Id is not Number")
             return
         }
-        const searchedPost = PostService.getPostById(id)
+        const searchedPost = await PostService.getPostById(id)
         if (!searchedPost) {
             res.status(404).json("There is no post")
             return

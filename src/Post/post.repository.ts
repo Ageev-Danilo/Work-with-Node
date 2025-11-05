@@ -1,7 +1,7 @@
 import { skip } from "node:test";
 import { PrismaClient } from "../client/prisma-client";
-import { Prisma } from "../generated/prisma/client";
 import { PostRepositoryContract } from "./post.types";
+import { Prisma } from "../generated/prisma/client";
 
 export const PostRepository: PostRepositoryContract = {
     async getPostById(id){
@@ -18,10 +18,13 @@ export const PostRepository: PostRepositoryContract = {
             return posts
         } catch (error) {
             console.log(error)
-            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError){
+                if(error.code  === 'P2003') {
                     console.log('Failed to create relation between Product and Category')
                     throw new Error("Failed to create relation between Product and Category") 
                 }
+            }
+                
     throw error
         }
     },

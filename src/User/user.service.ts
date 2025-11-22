@@ -3,6 +3,7 @@ import { UserRepository } from "./user.repository";
 import { sign } from "jsonwebtoken";
 import { ENV } from "../config/env";
 import { StringValue } from "ms";
+import { compare, hash } from "bcryptjs";
 
 
 export const UserService: UserServiceContract = {
@@ -11,7 +12,8 @@ export const UserService: UserServiceContract = {
       if (!user){
         throw new Error('NOT_FOUND')
       }
-      if(user.password != credentials.password){
+      const matchingPassword = await compare(credentials.password, user.password)
+      if(!matchingPassword){
         throw new Error('WRONG_CREDENTIALS')
       }
       const token = sign({ id: user.id }, ENV.JWT_ACCESS_SECRET_KEY, { expiresIn: ENV.JWT_EXPIRES_IN as StringValue })
@@ -21,6 +23,10 @@ export const UserService: UserServiceContract = {
     const user = await UserRepository.getUserByEmail(credentials.email)
     if(user){
         throw new Error('USER_EXISTS')
+    }
+    const hashedPassword = await hash(credentials.password, 10)
+    const hasedCredentials = {
+      ...credentials, password: hashedPassword
     }
     const newUser = await UserRepository.createUser(credentials)
       const token = sign({ id: newUser.id }, ENV.JWT_ACCESS_SECRET_KEY, { expiresIn: ENV.JWT_EXPIRES_IN as StringValue })
